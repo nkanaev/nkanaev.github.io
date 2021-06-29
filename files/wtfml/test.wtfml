@@ -1,0 +1,16 @@
+html {
+    lang: en;
+    head {
+        meta {
+            charset: UTF-8;
+        }
+        title {
+            "Welcome!"
+        }
+    }
+    body {
+        p {
+            "This is "  b{"my"}  " page"
+        }
+    }
+}

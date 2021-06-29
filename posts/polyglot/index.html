@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Writing a polyglot script | nkanaev</title>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="alternate" type="application/rss+xml" title="nkanaev" href="/feed.xml">
+    <link rel="stylesheet" href="/main.css">
+</head>
+<body>
+    <header>
+        <a href="/">nkanaev</a>
+            / <a href="/posts/">posts</a>
+            / <span>Writing a polyglot script</span>
+    </header>
+
+        <article>
+            <p>So here's the thing - I'm relatively good at Python. I somewhat know Ruby.
+Not good enough to write something complex, but enough to understand
+that it's &quot;a bit&quot; different from Python. Yet both of the languages
+have similar syntaxes, which made me think whether I could come up with a script
+that's valid in both languages.</p>
+<p>The shortest valid script could be:</p>
+<pre><code>print(&quot;hello world&quot;)
+</code></pre>
+<p>I thought that was too easy, so I set a goal to write a script that would
+print the exact language used. After a bit of tinkering, I came up with this:</p>
+<pre><code>print([&quot;ruby&quot;, &quot;python&quot;][(0 or 1)])
+</code></pre>
+<p>I've remembered that one of the main surprises the developers who switched
+from one language to another encountered was the fact that <code>0</code> is <em>falsey</em> in Python,
+whereas in Ruby it is <em>truthy</em>. So the expression <code>0 or 1</code> evaluates to 0 and 1
+in Ruby and Python, accordingly. And if we use just that to get the value at
+the corresponding index of the specially crafted list, we can achieve the given task.
+As a side note, we would need to enclose the boolean expression in parentheses,
+because otherwise it'll throw a syntax error in Ruby.</p>
+<p>I could have settled here, but I decided to raise the bar higher. What if I try to come up
+with a script that could do more sophisticated things
+than just printing some values?
+Now that's where things get more complicated,
+since you can't just do anything in one languages
+that would be also correct in another. But I've finally managed to come up with
+a somewhat decent solution with a few neat tricks:</p>
+<pre><code>(0 and eval(&quot;&quot;&quot;
+3.times {
+  puts 'ruby code goes here'
+}
+true
+&quot;&quot;&quot;)) or eval(compile(&quot;&quot;&quot;
+for i in range(3):
+    print('python code goes here')
+&quot;&quot;&quot;, &quot;&quot;, &quot;exec&quot;))
+</code></pre>
+<p>So what's happening in here:</p>
+<ol>
+<li>The code above is a single statement of the form <code>(0 and &lt;expr1&gt;) or &lt;expr2&gt;</code>.
+Both Python and Ruby support short-circuiting for boolean expressions,
+therefore <code>expr1</code> evaluates in Ruby and <code>expr2</code> in Python only.</li>
+<li>It heavily relies on metaprogramming, by evaluating only a single function
+that could contain more complex code inside a string.
+Ruby's <code>eval</code> needs to have a <em>truthy</em> value as the last statement,
+which is returned as the function's value. If we fail to do so,
+Ruby will try to execute <code>expr2</code>. For Python we could have used <code>expr</code>, but
+I realised that it's not available in Python 2 (which had not reached the EOL at
+the time when I was experimenting, so as a well-mannered Pythonista
+I had to support it as well).</li>
+<li>Using triple-quote strings is a nice addition to write more readable code
+without providing escape sequences for newlines where necessary.
+In Python it's the only way to create multiline strings.
+Ruby, on the other hand, supports multiline strings by default
+with single and double quoted strings, and treats <code>&quot;&quot;&quot;foo&quot;&quot;&quot;</code>
+as three separate strings <code>&quot;&quot; &quot;foo&quot; &quot;&quot;</code> which then get concatenated to one.
+This, however, makes using double (or single) quote characters
+tricky in the code placeholders.</li>
+</ol>
+
+        </article>
+        <footer class="light">
+            January 08, 2020
+            · <span>code</span>
+        </footer>
+</body>
+</html>

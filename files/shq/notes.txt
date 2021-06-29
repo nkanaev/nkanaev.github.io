@@ -1,0 +1,11 @@
+regex:
+
+> (\x60.*?\x60|\x22[^\n"]*\x22|/\*.*?\*/|\bpackage|import|func|interface|if|else|for|range\b)
+
+test:
+
+$ go run shq.go | sed -E $'s|\x1b\\[[0-9;]*m||g' | diff - shq.go
+
+html:
+
+$ cc aha.c -o aha && go run shq.go | ./aha > shq.html

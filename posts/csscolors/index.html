@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Brief history of CSS colors | nkanaev</title>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="alternate" type="application/rss+xml" title="nkanaev" href="/feed.xml">
+    <link rel="stylesheet" href="/main.css">
+</head>
+<body>
+    <header>
+        <a href="/">nkanaev</a>
+            / <a href="/posts/">posts</a>
+            / <span>Brief history of CSS colors</span>
+    </header>
+
+        <article>
+            <p>I've decided to create a personal blog. After a few hours of searching for a perfect template, I went with <a href="https://github.com/davidmerfield/Blot/tree/d31f2f8c/app/templates/latest/rosa">Rosa theme</a>. The only thing I changed (apart from minor cosmetic HTML tweaks) was the link color. I set it to <code>steelblue</code>, which is visible when you hover over a link. I don't have time for choosing the perfect color, because I have more important things to spend my time on.</p>
+<p>Which is - finding out where did <code>steelblue</code> color come from to CSS. The search of color origins revealed a lot of interesting backstory, forgotten memes and even a tragic loss of the people behind the computing history.</p>
+<h1>History of colors in CSS</h1>
+<p>In early 90's Tim Berners-Lee publishes the first prototype of what would become WWW. Internet becomes a new hot thing, HTML becomes the language of the Web, and in 1994 Tim Berners-Lee founds W3C - organization behind standardization of the Web.</p>
+<p>People start building websites, and one of the most requested features is document customization. Web developers want to be able to layout and add colors to their HTML. So CSS1 recommendation came in 1996 to address this. It specifies a lot of niceties, among which is ability to <a href="https://www.w3.org/TR/REC-CSS1/#color-units">set colors</a>, both using RGB codes and keywords. Color name keywords were taken from <a href="https://en.wikipedia.org/wiki/List_of_software_palettes#Microsoft_Windows_default_16-color_palette">MS Windows 16 color palette</a>. <code>orange</code> was <a href="https://www.w3.org/TR/CSS2/changes.html#q21.2">added</a> later on to CSS2.</p>
+<p>CSS3 came around not long after. For the reasons unknown to me, 2001 draft spec added <a href="https://www.w3.org/TR/2001/WD-css3-color-20010305#x11-color">even more color keywords</a>, this time from X11 (windowing system for Unix-like operating systems). It had a fair amount of <a href="https://lists.w3.org/Archives/Public/www-style/2002May/0122.html">criticism</a>, but ends up in a spec anyways. This spec mentions <code>steelblue</code> for the first time.</p>
+<p>In 2014 <code>rebeccapurple</code> <a href="https://lists.w3.org/Archives/Public/www-style/2014Jun/0257.html">was proposed</a> and added to CSS4 spec, <a href="http://meyerweb.com/eric/thoughts/2014/06/09/in-memoriam-2/">in memoriam</a> of Eric A. Meyer's daughter Rebecca, the man who played major role in CSS advocacy.</p>
+<h1>History of colors in X11</h1>
+<p>So <code>steelblue</code> came from X11, it turns out. And to answer the initial question we need to go further back in history.</p>
+<p>Xerox releases Alto in 1973 - the first computer with what would become today's GUI. During late 70's and early 80's GUI becomes a new hot thing. Microsoft and Apple present operating systems which offer GUIs.</p>
+<p>In the meantime enthusiasts from MIT come up with X Window System in 1984. The next year X adds color support. Jim Gettys <a href="https://cgit.freedesktop.org/~alanc/xc-historical/commit/xc/programs/rgb/rgb.txt?id=0d0ad63237618270e48503a37ce542139d7abab5">creates</a> a list of color names, with &quot;steelblue&quot; among them.</p>
+<p>Paul Raveling <a href="https://cgit.freedesktop.org/~alanc/xc-historical/commit/xc/programs/rgb/rgb.txt?id=6904446b8a8dc2bdf6f420f5436552ee920d70e2">updates the list</a> in 1989. Being a software engineer with a total lack of control, he ends up adding a bunch of new colors (<code>dodgerblue</code>?), changing the existing ones during the course. This update, which includes final &quot;tuned&quot; version of <code>steelblue</code>, ends up in CSS spec along with others' <a href="https://lists.w3.org/Archives/Public/www-style/2014Mar/0272.html">contributions</a>.</p>
+<p><span style="color: steelblue">The End.</span></p>
+
+        </article>
+        <footer class="light">
+            August 10, 2019
+            · <span>web</span>
+            · <span>unix</span>
+        </footer>
+</body>
+</html>

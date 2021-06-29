@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- This file was created with the aha Ansi HTML Adapter. https://github.com/theZiz/aha -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xml+xhtml; charset=UTF-8"/>
+<title>stdin</title>
+<style type="text/css">
+.reset       {color: black;}
+.bg-reset    {background-color: white;}
+.inverted    {color: white;}
+.bg-inverted {background-color: black;}
+.dimgray     {color: dimgray;}
+.red         {color: red;}
+.green       {color: green;}
+.yellow      {color: olive;}
+.blue        {color: blue;}
+.purple      {color: purple;}
+.cyan        {color: teal;}
+.white       {color: gray;}
+.bg-black    {background-color: black;}
+.bg-red      {background-color: red;}
+.bg-green    {background-color: green;}
+.bg-yellow   {background-color: olive;}
+.bg-blue     {background-color: blue;}
+.bg-purple   {background-color: purple;}
+.bg-cyan     {background-color: teal;}
+.bg-white    {background-color: gray;}
+.underline   {text-decoration: underline;}
+.bold        {font-weight: bold;}
+.italic      {font-style: italic;}
+.blink       {text-decoration: blink;}
+.crossed-out {text-decoration: line-through;}
+.highlighted {filter: contrast(70%) brightness(190%);}
+</style>
+</head>
+<body>
+<pre>
+<span class="bold ">package</span> main;<span class="bold ">import</span>(<span class="cyan ">&quot;fmt&quot;</span>;<span class="cyan ">&quot;strings&quot;</span>;<span class="cyan ">&quot;regexp&quot;</span>);<span class="bold ">func</span> main(){ x:=(
+<span class="cyan ">`/* ---------------------------------------------------------`</span>+
+<span class="cyan ">`-*/No:=&quot;&quot;; P:=func(x interface{}){ o += fmt.Sprint(x)};P(Qpa`</span>+
+<span class="cyan ">`ckageQ+N  Q main;import(&quot;fmt&quot;;&quot;strings&quot;;&quot;regexp&quot;);func main(`</span>+
+<span class="cyan ">`){ x:=(Q)N  for i,ch:=range x {; if i%60==0 { P(&quot;\nQ&quot;) }; P(`</span>+
+<span class="cyan ">`string(ch))Nif i==len(x)-1 {P(&quot;Q)&quot;)}else if i%60==59 {P(&quot;Q+&quot;`</span>+
+<span class="cyan ">`)} }; P(&quot;\n&quot;)Na:=strings.Replace(x,string(78),string(10),-1)`</span>+
+<span class="cyan ">` /*  newline   */Nb:=strings.Replace(a,string(84),string(9),`</span>+
+<span class="cyan ">`-1)  /*  tab       */Nc:=strings.Replace(b,string(81),string`</span>+
+<span class="cyan ">`(96),-1) /*  backtick  */NP(c); r:=regexp.MustCompile(Q(\x60`</span>+
+<span class="cyan ">`.*?\x60|\x22[^\n&quot;]*\x22|/\*Q+NQ.*?\*/|\bpackage|import|func|`</span>+
+<span class="cyan ">`interface|if|else|for|range|swiQ+NQtch|case|return\b)Q); Rep`</span>+
+<span class="cyan ">`lacerFunc := r.ReplaceAllStringFuncNfmt.Print(ReplacerFunc(o`</span>+
+<span class="cyan ">`, func(x string) string { switch x[0] {Ncase 0x22: return &quot;\`</span>+
+<span class="cyan ">`x1b[36m&quot;+x+&quot;\x1b[0m&quot;;   /* double-quoted */Ncase 0x60: retur`</span>+
+<span class="cyan ">`n &quot;\x1b[36m&quot;+x+&quot;\x1b[0m&quot;;   /* back-quoted   */Ncase 0x2f: r`</span>+
+<span class="cyan ">`eturn &quot;\x1b[90m&quot;+x+&quot;\x1b[0m&quot;;   /* comments      */Ndefault:`</span>+
+<span class="cyan ">` return&quot;\x1b[0;1m&quot;+x+&quot;\x1b[0m&quot;} })) /* keywords     */}N`</span>)
+<span class="highlighted dimgray ">/* ----------------------------------------------------------*/</span>
+o:=<span class="cyan ">&quot;&quot;</span>; P:=<span class="bold ">func</span>(x <span class="bold ">interface</span>{}){ o += fmt.Sprint(x)};P(<span class="cyan ">`package`</span>+
+  <span class="cyan ">` main;import(&quot;fmt&quot;;&quot;strings&quot;;&quot;regexp&quot;);func main(){ x:=(`</span>)
+  <span class="bold ">for</span> i,ch:=<span class="bold ">range</span> x {; <span class="bold ">if</span> i%60==0 { P(<span class="cyan ">&quot;\n`&quot;</span>) }; P(string(ch))
+<span class="bold ">if</span> i==len(x)-1 {P(<span class="cyan ">&quot;`)&quot;</span>)}<span class="bold ">else</span> <span class="bold ">if</span> i%60==59 {P(<span class="cyan ">&quot;`+&quot;</span>)} }; P(<span class="cyan ">&quot;\n&quot;</span>)
+a:=strings.Replace(x,string(78),string(10),-1) <span class="highlighted dimgray ">/*  newline   */</span>
+b:=strings.Replace(a,string(84),string(9),-1)  <span class="highlighted dimgray ">/*  tab       */</span>
+c:=strings.Replace(b,string(81),string(96),-1) <span class="highlighted dimgray ">/*  backtick  */</span>
+P(c); r:=regexp.MustCompile(<span class="cyan ">`(\x60.*?\x60|\x22[^\n&quot;]*\x22|/\*`</span>+
+<span class="cyan ">`.*?\*/|\bpackage|import|func|interface|if|else|for|range|swi`</span>+
+<span class="cyan ">`tch|case|return\b)`</span>); ReplacerFunc := r.ReplaceAllStringFunc
+fmt.Print(ReplacerFunc(o, <span class="bold ">func</span>(x string) string { <span class="bold ">switch</span> x[0] {
+<span class="bold ">case</span> 0x22: <span class="bold ">return</span> <span class="cyan ">&quot;\x1b[36m&quot;</span>+x+<span class="cyan ">&quot;\x1b[0m&quot;</span>;   <span class="highlighted dimgray ">/* double-quoted */</span>
+<span class="bold ">case</span> 0x60: <span class="bold ">return</span> <span class="cyan ">&quot;\x1b[36m&quot;</span>+x+<span class="cyan ">&quot;\x1b[0m&quot;</span>;   <span class="highlighted dimgray ">/* back-quoted   */</span>
+<span class="bold ">case</span> 0x2f: <span class="bold ">return</span> <span class="cyan ">&quot;\x1b[90m&quot;</span>+x+<span class="cyan ">&quot;\x1b[0m&quot;</span>;   <span class="highlighted dimgray ">/* comments      */</span>
+default: <span class="bold ">return</span><span class="cyan ">&quot;\x1b[0;1m&quot;</span>+x+<span class="cyan ">&quot;\x1b[0m&quot;</span>} })) <span class="highlighted dimgray ">/* keywords     */</span>}
+</pre>
+</body>
+</html>

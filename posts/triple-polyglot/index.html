@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Writing a triple polyglot script | nkanaev</title>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="alternate" type="application/rss+xml" title="nkanaev" href="/feed.xml">
+    <link rel="stylesheet" href="/main.css">
+</head>
+<body>
+    <header>
+        <a href="/">nkanaev</a>
+            / <a href="/posts/">posts</a>
+            / <span>Writing a triple polyglot script</span>
+    </header>
+
+        <article>
+            <p>In the previous post I've described how to write a script
+that's both valid Ruby and Python.
+Then I came up with the idea of adding Perl on top if it.</p>
+<p>So, the basic form of the polyglot code (with slight modifications) is this:</p>
+<pre><code>(0 and eval(&quot;puts 1&quot;) or 1) or eval(compile(&quot;print(2)&quot;, &quot;&quot;, &quot;exec&quot;))
+</code></pre>
+<p>Now, if I could find a value that sets Perl apart from Ruby &amp; Python
+and add it to the expression above, I'd be able to run some code via <code>eval</code>.
+Luckily, quick google search revealed that <code>&quot;0&quot;</code> is <em>falsey</em> in Perl.
+After a bit of tinkering I've managed to construct something like this:</p>
+<pre><code>(0 and (eval(&quot;puts 1&quot;) or 1)) or (&quot;0&quot; and (eval(compile(&quot;print(2)&quot;, &quot;&quot;, &quot;exec&quot;)) or 1)) or eval(&quot;print 3;&quot;)
+</code></pre>
+<p>That's quite a lot of brackets to make non-lisper's eyes bleed,
+so here's the brief summary of what's going on:</p>
+<pre><code>(0 and (&lt;ruby_expr&gt; or 1))
+  or (&quot;0&quot; and (&lt;python_expr&gt; or 1))
+    or &lt;perl_expr&gt;
+</code></pre>
+<ul>
+<li>Ruby treats <code>0</code> as <em>truthy</em>, runs the first expression and discards the rest.</li>
+<li>Python ignores the first expression (<code>0</code> is <em>falsey</em>),
+and runs the second expression only (non-empty strings are <em>truthy</em>)</li>
+<li>Perl ignores the first and the second expressions (<code>0</code> and <code>&quot;0&quot;</code> as <em>falsey</em>),
+running only the last expression.</li>
+<li><code>or 1</code> is a &quot;safe-guard&quot; to make sure that the short-circuiting
+stops after executing the expression prior to that.</li>
+</ul>
+<h2>making code &quot;readable&quot;</h2>
+<p>Again, this is still not enough for me,
+since I wanted placeholders that would let me
+write more &quot;readable&quot; code inside <code>eval</code> calls (read: multiline strings).</p>
+<p>And this is where I encountered a small problem.
+Python supports multiline strings <em>only</em> via triple-quotes.
+Perl (unlike Ruby) raises syntax error on that. So I needed some workaround.</p>
+<p>The solution was to use <code>q</code> &quot;function&quot; in Perl:</p>
+<pre><code>substr(q(&quot;&quot;&quot;
+&lt;perl_stmts&gt;
+&quot;&quot;&quot;), 3, -3)
+</code></pre>
+<p>Syntax is still valid in 3 languages.
+But there's a catch -  <code>q</code> function does not exist in Ruby and Python,
+but defining it should be easy using the same techniques described earlier:</p>
+<pre><code>(0 and eval(&quot;def q(x) x end&quot;, binding)) or (&quot;0&quot; and (eval(compile(&quot;def q(x):\n return x&quot;, &quot;&quot;, &quot;exec&quot;)) or 1));
+</code></pre>
+<p>Now we can wrap the rest of the strings in <code>q</code> identity function, and we're done.</p>
+<h2>creating a &quot;practical&quot; application</h2>
+<p>I didn't spend so much time just for nothing, so here's a working fizzbuzz example:</p>
+<pre><code>(0 and eval(&quot;def q(x) x end&quot;, binding)) or (&quot;0&quot; and (eval(compile(&quot;def q(x):\n return x&quot;, &quot;&quot;, &quot;exec&quot;)) or 1));
+
+(0 and (eval(q(&quot;&quot;&quot;
+1.upto(100){|i|puts ('fizzbuzz '[n=i**4%-15,n+13] || i.to_s).rstrip}
+&quot;&quot;&quot;)) or 1)) or (&quot;0&quot; and (eval(compile(q(&quot;&quot;&quot;
+for i in range(1,101): print('fizz'*(i%3==0) + 'buzz'*(i%5==0) or i)
+&quot;&quot;&quot;), &quot;&quot;, &quot;exec&quot;)) or 1)) or eval(substr(q('''
+print &quot;fizz&quot;x!($_ % 3) . &quot;buzz&quot;x!($_ % 5) || $_ , &quot;\n&quot; for 1 .. 100;
+'''), 3, -3))
+</code></pre>
+<p>Triple-hirable.</p>
+
+        </article>
+        <footer class="light">
+            January 28, 2020
+            · <span>code</span>
+        </footer>
+</body>
+</html>

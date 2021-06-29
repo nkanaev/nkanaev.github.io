@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Writing a syntax-highlighted quine in Go | nkanaev</title>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="alternate" type="application/rss+xml" title="nkanaev" href="/feed.xml">
+    <link rel="stylesheet" href="/main.css">
+</head>
+<body>
+    <header>
+        <a href="/">nkanaev</a>
+            / <a href="/posts/">posts</a>
+            / <span>Writing a syntax-highlighted quine in Go</span>
+    </header>
+
+        <article>
+            <p>I wrote a code in Go. It's fixed-width, nicely commented and
+when run, outputs it's own source code:</p>
+<pre><code>package main;import(&quot;fmt&quot;;&quot;strings&quot;;&quot;regexp&quot;);func main(){ x:=(
+`/* ---------------------------------------------------------`+
+`-*/No:=&quot;&quot;; P:=func(x interface{}) {o += fmt.Sprint(x)};P(Qpa`+
+`ckageQ+N  Q main;import(&quot;fmt&quot;;&quot;strings&quot;;&quot;regexp&quot;);func main(`+
+`){ x:=(Q)N  for i,ch:=range x {; if i%60==0 { P(&quot;\nQ&quot;) }; P(`+
+`string(ch))N if i==len(x)-1 {P(&quot;Q)&quot;)}else if i%60==59 {P(&quot;Q+`+
+`&quot;)} }; P(&quot;\n&quot;)Na:=strings.Replace(x,string(78),string(10),-1`+
+`) /* newline \n */Nb:=strings.Replace(a,string(84),string(9)`+
+`,-1)  /* tab     \t */Nc:=strings.Replace(b,string(81),strin`+
+`g(96),-1) /* quote   \Q */NP(c); r:=regexp.MustCompile(Q(\x6`+
+`0.*?\x60|\x22[^\n&quot;]*\x22|/\*Q+NQ.*?\*/|\bpackage|import|func`+
+`|interface|if|else|for|range|swiQ+NQtch|case|return|default\`+
+`b)Q); Replace :=r.ReplaceAllStringFuncNfmt.Print (Replace (o`+
+`, func (x string) string {  switch x[0]  {Ncase 0x22: return`+
+` &quot;\x1b[36m&quot;+x+&quot;\x1b[0m&quot;; /* &quot;double-quoted&quot; */Ncase 0x60: re`+
+`turn &quot;\x1b[36m&quot;+x+&quot;\x1b[0m&quot;; /*  Qback-quotedQ  */Ncase 0x2f`+
+`: return &quot;\x1b[90m&quot;+x+&quot;\x1b[0m&quot;; /* general comment */Ndefau`+
+`lt: return &quot;\x1b[0;1m&quot;+x+&quot;\x1b[0m&quot;} })); /* keyword    */}N`)
+/* ----------------------------------------------------------*/
+o:=&quot;&quot;; P:=func(x interface{}) {o += fmt.Sprint(x)};P(`package`+
+  ` main;import(&quot;fmt&quot;;&quot;strings&quot;;&quot;regexp&quot;);func main(){ x:=(`)
+  for i,ch:=range x {; if i%60==0 { P(&quot;\n`&quot;) }; P(string(ch))
+ if i==len(x)-1 {P(&quot;`)&quot;)}else if i%60==59 {P(&quot;`+&quot;)} }; P(&quot;\n&quot;)
+a:=strings.Replace(x,string(78),string(10),-1) /* newline \n */
+b:=strings.Replace(a,string(84),string(9),-1)  /* tab     \t */
+c:=strings.Replace(b,string(81),string(96),-1) /* quote   \` */
+P(c); r:=regexp.MustCompile(`(\x60.*?\x60|\x22[^\n&quot;]*\x22|/\*`+
+`.*?\*/|\bpackage|import|func|interface|if|else|for|range|swi`+
+`tch|case|return|default\b)`); Replace :=r.ReplaceAllStringFunc
+fmt.Print (Replace (o, func (x string) string {  switch x[0]  {
+case 0x22: return &quot;\x1b[36m&quot;+x+&quot;\x1b[0m&quot;; /* &quot;double-quoted&quot; */
+case 0x60: return &quot;\x1b[36m&quot;+x+&quot;\x1b[0m&quot;; /*  `back-quoted`  */
+case 0x2f: return &quot;\x1b[90m&quot;+x+&quot;\x1b[0m&quot;; /* general comment */
+default: return &quot;\x1b[0;1m&quot;+x+&quot;\x1b[0m&quot;} })); /* keyword    */}
+</code></pre>
+<p>Right, forgot to mention - the output is syntax highlighted.
+Here's how it actually looks like:</p>
+<p><img src="/files/shq/preview.png" alt="preview" /></p>
+<h2>how</h2>
+<p>It's quite simple. First you write a quine.
+Then you add syntax highlighting feature to it.</p>
+<p>OK, a bit more verbose explanation:</p>
+<ol>
+<li>
+<p>Write a quine of the form:</p>
+<pre><code>p1: initial boilerplate: package name, imports etc.
+p2: declare a variable `x` that contains the code after itself
+p3: print statement that outputs the initial boilerplate
+p4: code that outputs `x`'s value representation
+p5: print statement that outputs the value of `x`
+</code></pre>
+<p>The tricky part is updating the value of <code>x</code> in <code>p2</code>.
+Luckily, it can be automated by an external script
+that reads the code starting from <code>p3</code> (<code>/* ---</code> in my case) and outputs
+the necessary value. The script's output is copy-pasted
+back into the quine once <code>p3, p4 &amp; p5</code> is polished.</p>
+<p>I also encode certain characters that require character escaping,
+which will be decoded before <code>p5</code>.
+This way I don't have to deal with them in <code>p4</code>.</p>
+</li>
+<li>
+<p>Update the quine to store it's own value in a certain variable.</p>
+<p>In the code above, it's <code>o</code>. This way the quine becomes &quot;self-aware&quot;,
+knowing what it's source will look like prior to printing.</p>
+</li>
+<li>
+<p>Add ANSI escape sequences between certain terms.</p>
+<p>I like to keep things simple, so my colorscheme only highlights
+keywords with <b>bold</b>,
+strings with <span style="color: teal">cyan</span>
+and comments with <span style="color: #aaa">low-contrast colour</span>.</p>
+<p>For that, I used a hand-crafted regexp that matches certain code parts.
+Here's the breakdown:</p>
+<pre><code>\x60.*?\x60                        &lt;- `back-quoted strings`
+\x22[^\n&quot;]*\x22                    &lt;- &quot;double-quoted string&quot;
+/\*.*?\*/                          &lt;- /* general comments */
+\bpackage|import|func|and|etc\b    &lt;- reserved keywords
+</code></pre>
+<p>The matches are then wrapped in ANSI codes:</p>
+<pre><code>&quot;\x1b[36m&quot;  + x + &quot;\x1b[0m&quot; // cyan
+&quot;\x1b[90m&quot;  + x + &quot;\x1b[0m&quot; // dark grey
+&quot;\x1b[0;1m&quot; + x + &quot;\x1b[0m&quot; // bold
+</code></pre>
+</li>
+</ol>
+
+        </article>
+        <footer class="light">
+            September 28, 2020
+            · <span>code</span>
+        </footer>
+</body>
+</html>

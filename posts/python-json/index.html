@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Treating JSON as Python | nkanaev</title>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="alternate" type="application/rss+xml" title="nkanaev" href="/feed.xml">
+    <link rel="stylesheet" href="/main.css">
+</head>
+<body>
+    <header>
+        <a href="/">nkanaev</a>
+            / <a href="/posts/">posts</a>
+            / <span>Treating JSON as Python</span>
+    </header>
+
+        <article>
+            <p>It just occured to me that JSON (with some exceptions)
+can be a subset of Python, and parsed as such without the help of <code>json</code> module.</p>
+<p>Say, if we have a sample JSON, which includes all of the value types
+(object/array/string/numbers/true/false/null):</p>
+<pre><code>{
+  &quot;numbers&quot;: [123, 123.456],
+  &quot;booleans&quot;: [true, false],
+  &quot;null&quot;: null,
+  &quot;string&quot;: &quot;string&quot;
+}
+</code></pre>
+<p>we can parse it using <code>eval</code>, by complementing
+<code>null</code>/<code>true</code>/<code>false</code> with corresponding variables:</p>
+<pre><code># `sample` is a string representation of the above example
+eval(sample, {}, {'null': None, 'true': True, 'false': False})
+</code></pre>
+<p>which results in a proper Python object:</p>
+<pre><code>{'booleans': [True, False],
+ 'null': None,
+ 'numbers': [123, 123.456],
+ 'string': 'string'}
+</code></pre>
+<p>This, of course, doesn't handle certain cases, like string escape sequences.
+And the solution overall isn't safe, and shouldn't be used in a production code.
+Nevertheless, I find the trick interesting.</p>
+
+        </article>
+        <footer class="light">
+            December 15, 2020
+        </footer>
+</body>
+</html>

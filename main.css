@@ -1,0 +1,40 @@
+body {
+  margin: 4rem; padding: 0;
+  max-width: 42rem; font: 16px/1.6 sans-serif;
+}
+
+@media(max-width: 50rem) {
+  body { margin: 4rem auto; padding: 0 2rem; }
+}
+
+a { color: inherit; }
+
+article h1 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+article pre {
+  overflow-x: auto;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+}
+
+article img {
+  display: block;
+  width: 100%;
+  border-radius: 3px;
+}
+
+article p code {
+  background-color: #eee;
+  border-radius: 3px;
+  padding: 0 .25rem;
+  font-family: sans-serif;
+}
+
+header { margin-bottom: 4rem; }
+footer { margin-top: 2rem; }
+
+.light { color: #aaa; }

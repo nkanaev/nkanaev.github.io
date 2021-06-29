@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+    <channel>
+        <title>nkanaev</title>
+        <description>Feed for "nkanaev"</description>
+        <link>https://nkanaev.com</link>
+        <item>
+            <title>Treating JSON as Python</title>
+            <link>https://nkanaev.com/posts/python-json/</link>
+            <guid isPermaLink="false">20201215-python-json.md</guid>
+            <pubDate>Tue, 15 Dec 2020 00:00:00 UT</pubDate>
+        </item>
+        <item>
+            <title>Writing a syntax-highlighted quine in Go</title>
+            <link>https://nkanaev.com/posts/shq/</link>
+            <guid isPermaLink="false">20200928-shq.md</guid>
+            <pubDate>Mon, 28 Sep 2020 00:00:00 UT</pubDate>
+        </item>
+        <item>
+            <title>Writing a triple polyglot script</title>
+            <link>https://nkanaev.com/posts/triple-polyglot/</link>
+            <guid isPermaLink="false">20200128-triple-polyglot.md</guid>
+            <pubDate>Tue, 28 Jan 2020 00:00:00 UT</pubDate>
+        </item>
+        <item>
+            <title>Writing a polyglot script</title>
+            <link>https://nkanaev.com/posts/polyglot/</link>
+            <guid isPermaLink="false">20200108-polyglot.md</guid>
+            <pubDate>Wed, 08 Jan 2020 00:00:00 UT</pubDate>
+        </item>
+        <item>
+            <title>Writing an ouroboros quine</title>
+            <link>https://nkanaev.com/posts/ouroboros/</link>
+            <guid isPermaLink="false">20191120-ouroboros.md</guid>
+            <pubDate>Wed, 20 Nov 2019 00:00:00 UT</pubDate>
+        </item>
+        <item>
+            <title>Brief history of CSS colors</title>
+            <link>https://nkanaev.com/posts/csscolors/</link>
+            <guid isPermaLink="false">20190810-csscolors.md</guid>
+            <pubDate>Sat, 10 Aug 2019 00:00:00 UT</pubDate>
+        </item>
+        <item>
+            <title>Hello World</title>
+            <link>https://nkanaev.com/posts/helloworld/</link>
+            <guid isPermaLink="false">20190808-helloworld.md</guid>
+            <pubDate>Thu, 08 Aug 2019 00:00:00 UT</pubDate>
+        </item>
+    </channel>
+</rss>
